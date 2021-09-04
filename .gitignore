@@ -1,0 +1,7 @@
+srcs/*.o
+srcs/basic/*.o
+srcs/parsing/*.o
+
+The*
+make.py
+download
