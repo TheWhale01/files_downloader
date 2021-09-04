@@ -18,8 +18,4 @@ fclean: clean
 
 re: fclean all
 
-re_sanitize: fclean sanitize
-
-re_debug: fclean debug
-
-.PHONY: all sanitize clean fclean re
+.PHONY: all clean fclean re
