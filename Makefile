@@ -1,14 +1,27 @@
 CC=gcc
-CFILES=srcs/main.c srcs/file.c srcs/dl.c srcs/basic/ft_putchar.c srcs/basic/ft_strlen.c srcs/basic/ft_split.c srcs/parsing/parser.c
+BIN_DIR=bin/
+OBJS_DIR=objs/
+SRCS_DIR=srcs/
 INCLUDES=includes/
 CFLAGS=-Wall -Wextra -Werror -I $(INCLUDES)
-OBJS=${CFILES:.c=.o}
-NAME=download
+CFILES=$(addprefix $(SRCS_DIR), main.c file.c dl.c basic/ft_putchar.c basic/ft_split.c basic/ft_strlen.c parsing/parser.c)
+OBJS=$(patsubst $(SRCS_DIR)%.c, $(OBJS_DIR)%.o, $(CFILES))
+NAME=$(BIN_DIR)download
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lcurl
+$(OBJS_DIR)%.o: $(SRCS_DIR)%.c
+	$(shell mkdir -p $(dir $@))
+	$(CC) $(CFLAGS) -c $< -o $@
+
+(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -lcurl -o $(NAME)
 
 all: $(NAME)
+
+sanitize: CFLAGS=-Wall -Wextra -Werror -I $(INCLUDES) -fsanitize=address
+sanitize: $(NAME) clean
+
+debug: CFLAGS=-Wall -Wextra -Werror -I $(INCLUDES) -g
+debug: $(NAME) clean
 
 clean:
 	rm -f $(OBJS)
@@ -18,4 +31,8 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+re_sanitize: fclean sanitize
+
+re_debug: fclean debug
+
+.PHONY: all sanitize debug clean fclean
