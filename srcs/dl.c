@@ -19,7 +19,9 @@ char *get_filename(char *url)
 void write_file(char *buff, int size, int nb, t_data *data)
 {
 	data->mb += size * nb;
-	printf("\r(%ldMB)", data->mb / 1000000);
+	ft_putstr("\r	(");
+	ft_putnbr(data->mb / 1000000);
+	ft_putstr("MB)");
 	fflush(stdout);
 	write(data->fd, buff, size * nb);
 }
