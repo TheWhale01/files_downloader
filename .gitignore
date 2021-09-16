@@ -1,6 +1,4 @@
-srcs/*.o
-srcs/basic/*.o
-srcs/parsing/*.o
+bin/
+objs/
 
-test
-download
+links.txt

@@ -13,6 +13,8 @@ int main(int ac, char **av)
 	lines = read_file(fd);
 	while (lines[++i])
 	{
+		ft_putstr(get_filename(lines[i]));
+		ft_putstr("\n\n");
 		dl_file(lines[i]);
 		free(lines[i]);
 	}
