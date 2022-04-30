@@ -1,14 +1,14 @@
 CC=gcc
 BIN_DIR=bin/
-SRCS_DIR=srcs/
-OBJS_DIR=objs/
-CFILES=srcs/main.c srcs/file.c srcs/dl.c srcs/basic/ft_putnbr.c srcs/basic/ft_putchar.c srcs/basic/ft_strlen.c srcs/basic/ft_split.c srcs/parsing/parser.c
+SRC_DIR=src/
+OBJ_DIR=obj/
+CFILES=$(addprefix $(SRC_DIR), dl.c free.c get_next_line.c linked_list.c main.c utils.c)
 INCLUDES=includes/
-CFLAGS=-Wall -Wextra -Werror -I $(INCLUDES)
-OBJS=$(patsubst $(SRCS_DIR)%.c, $(OBJS_DIR)%.o, $(CFILES))
+CFLAGS=-Wall -Wextra -Werror -I $(INCLUDES) -lreadline
+OBJS=$(patsubst $(SRCS_DIR)%.c, $(OBJ_DIR)%.o, $(CFILES))
 NAME=bin/download
 
-$(OBJS_DIR)%.o: $(SRCS_DIR)%.c
+$(OBJ_DIR)%.o: $(SRCS_DIR)%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
